@@ -1,0 +1,77 @@
+/* Focus the workspace on the writing task. */
+.workspace-page {
+  max-width: 1040px;
+  padding-top: 34px;
+}
+
+.page-heading {
+  margin-bottom: 22px;
+}
+
+.page-heading h1 {
+  margin-top: 11px;
+  margin-bottom: 8px;
+}
+
+.workspace-grid {
+  display: block;
+}
+
+.editor-card {
+  box-shadow: 0 10px 32px #203b2b08;
+}
+
+.editor-tools {
+  height: 48px;
+}
+
+.editor-actions {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.privacy-note {
+  margin-bottom: 0;
+}
+
+.sidebar-bottom {
+  padding-bottom: 4px;
+}
+
+.topbar-right {
+  font-size: 10px;
+}
+
+.topbar-right .status-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.primary-button,
+.subtle-button,
+.new-doc,
+.main-nav button,
+.mode-switch button,
+.apply-button {
+  transition: transform 140ms cubic-bezier(.23, 1, .32, 1), background-color 140ms ease,
+    border-color 140ms ease, color 140ms ease;
+}
+
+.primary-button:active,
+.subtle-button:active,
+.new-doc:active,
+.main-nav button:active,
+.mode-switch button:active,
+.apply-button:active {
+  transform: scale(.98);
+}
+
+@media (max-width: 800px) {
+  .workspace-page {
+    padding-top: 27px;
+  }
+
+  .page-heading {
+    margin-bottom: 17px;
+  }
+}
