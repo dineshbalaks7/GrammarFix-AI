@@ -100,7 +100,29 @@ function App() {
     } catch (error) { notify(error.message || 'Could not reach the correction service.'); }
     finally { setBusy(false); }
   }
-  async function copyResult() { if (!result?.correctedText) return; await navigator.clipboard.writeText(result.correctedText); notify('Corrected text copied.'); }
+  async function copyResult() {
+    if (!result?.correctedText) return;
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(result.correctedText);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
+      notify('Corrected text copied.');
+    } catch {
+      const helper = document.createElement('textarea');
+      helper.value = result.correctedText;
+      helper.setAttribute('readonly', '');
+      helper.style.position = 'fixed';
+      helper.style.opacity = '0';
+      document.body.appendChild(helper);
+      helper.select();
+      helper.setSelectionRange(0, helper.value.length);
+      const copied = document.execCommand('copy');
+      helper.remove();
+      notify(copied ? 'Corrected text copied.' : 'Copy is unavailable in this browser.');
+    }
+  }
   function useResult() { if (result?.correctedText) { setText(result.correctedText); setResult(null); notify('Updated your writing area.'); } }
   function downloadResult() { if (!result?.correctedText) return; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([result.correctedText], { type: 'text/plain' })); a.download = 'grammarfix-corrected.txt'; a.click(); URL.revokeObjectURL(a.href); }
   function loadHistory(item) { setText(item.original); setResult({ correctedText: item.corrected, originalText: item.original, issues: [], explanation: 'Loaded from your recent history.' }); setPage('workspace'); setMobileNav(false); }
